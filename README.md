@@ -8,7 +8,8 @@
 
 ## Mo ta
 
-(Mo ta ngan gon bai lab va nhung gi ban da lam)
+Lab nay xay ETL pipeline don gian tu file JSON -> CSV gom 4 buoc Extract, Validate, Transform, Load. 
+Sau khi tao bo du lieu clean, minh tao them bo garbage data va chay stress test agent de quan sat tac dong cua data quality den chat luong cau tra loi.
 
 ---
 
@@ -16,7 +17,9 @@
 
 ### Prerequisites
 ```bash
-pip install pandas
+python3 -m venv venv
+source venv/bin/activate
+pip install pandas pytest
 ```
 
 ### Chay ETL Pipeline
@@ -26,7 +29,8 @@ python solution.py
 
 ### Chay Agent Simulation (Stress Test)
 ```bash
-# Mo ta cach ban chay thi nghiem Clean vs Garbage data
+python generate_garbage.py
+python agent_simulation.py
 ```
 
 ---
@@ -44,4 +48,9 @@ python solution.py
 
 ## Ket qua
 
-(Tom tat ket qua: bao nhieu records da xu ly, bao nhieu bi loai, v.v.)
+- Raw data: 5 records
+- Sau validation: 3 records hop le, 2 records bi loai (`price <= 0` va `category` rong)
+- Output: tao `processed_data.csv` voi cac cot `discounted_price` va `processed_at`
+- Stress test:
+  - Clean data: Agent tra loi hop ly (Laptop - $1200)
+  - Garbage data: Agent bi lech do outlier (Nuclear Reactor - $999999)
